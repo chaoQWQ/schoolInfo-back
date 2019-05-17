@@ -4,7 +4,6 @@ import com.github.pagehelper.Page;
 import com.zc.schoolinfo.model.dto.CompetitionQueryDTO;
 import com.zc.schoolinfo.model.pojo.BizCompetitionInfo;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +14,7 @@ import java.util.Map;
  * @Version 1.0
  **/
 
-public interface CompetitionServiece {
+public interface CompetitionService {
     Page<BizCompetitionInfo> getCompetitionByPage(CompetitionQueryDTO competitionDTO);
 
 
@@ -28,4 +27,14 @@ public interface CompetitionServiece {
     List<Map<String,Object>> getTypeList();
 
     int submitCompInfo(BizCompetitionInfo competitionInfo);
+
+    Page<BizCompetitionInfo> getPendingAudit(Integer pageNum,Integer pageSize);
+
+    void updateCompInfoStatus(Integer id,String status);
+
+    Page<BizCompetitionInfo> getMy(Integer pageNum,Integer pageSize,String author);
+
+    int updateCompInfo(BizCompetitionInfo competitionInfo);
+
+    int deleteCompInfo(Integer id);
 }

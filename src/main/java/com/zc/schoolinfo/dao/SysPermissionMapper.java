@@ -1,5 +1,6 @@
 package com.zc.schoolinfo.dao;
 
+import com.github.pagehelper.Page;
 import com.zc.schoolinfo.model.pojo.SysPermission;
 import com.zc.schoolinfo.model.pojo.sysPermissionExample;
 import java.util.List;
@@ -10,7 +11,7 @@ public interface SysPermissionMapper {
 
     int deleteByExample(sysPermissionExample example);
 
-    int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(SysPermission record);
 
@@ -18,7 +19,7 @@ public interface SysPermissionMapper {
 
     List<SysPermission> selectByExample(sysPermissionExample example);
 
-    SysPermission selectByPrimaryKey(Long id);
+    SysPermission selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") SysPermission record, @Param("example") sysPermissionExample example);
 
@@ -29,4 +30,8 @@ public interface SysPermissionMapper {
     int updateByPrimaryKey(SysPermission record);
 
     List<String> selectPermissionByUserId(Integer id);
+
+    List<SysPermission> getAll();
+
+    Page<SysPermission> getAllByPage(@Param("pageNum")Integer pageNum, @Param("pageSize")Integer pageSize);
 }

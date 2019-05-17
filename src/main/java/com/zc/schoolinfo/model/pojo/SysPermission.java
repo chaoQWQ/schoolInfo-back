@@ -1,7 +1,7 @@
 package com.zc.schoolinfo.model.pojo;
 
 public class SysPermission {
-    private Long id;
+    private Integer id;
 
     private String name;
 
@@ -13,11 +13,11 @@ public class SysPermission {
 
     private Long parentId;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

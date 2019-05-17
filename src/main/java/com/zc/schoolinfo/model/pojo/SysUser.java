@@ -1,23 +1,28 @@
 package com.zc.schoolinfo.model.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class SysUser {
+public class SysUser implements Serializable {
+
+    private static final long serialVersionUID = -7981945827106624087L;
     private Integer id;
 
     private String username;
 
     private String password;
 
-    private String nickname;
+    private String realname;
 
     private String mobile;
 
     private String email;
 
     private String qq;
-
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date birthday;
 
     private Byte gender;
@@ -71,12 +76,12 @@ public class SysUser {
         this.password = password == null ? null : password.trim();
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getRealname() {
+        return realname;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname == null ? null : nickname.trim();
+    public void setRealname(String realname) {
+        this.realname = realname == null ? null : realname.trim();
     }
 
     public String getMobile() {

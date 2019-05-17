@@ -10,6 +10,7 @@ public enum  StatusEnum {
     /**通过**/
     PASS,
     /**待审核**/
-    PENDING_REVIEW
+    PENDING_REVIEW,
+    DRAFT
 
 }

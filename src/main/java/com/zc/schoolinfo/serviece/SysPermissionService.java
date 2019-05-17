@@ -1,5 +1,9 @@
 package com.zc.schoolinfo.serviece;
 
+import com.github.pagehelper.Page;
+import com.zc.schoolinfo.model.pojo.SysPermission;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import java.util.List;
 
 /**
@@ -10,4 +14,14 @@ import java.util.List;
  **/
 public interface SysPermissionService {
     List<String> selectPermissionByUserId(Integer id);
+
+    List<SysPermission> getAll();
+
+    Page<SysPermission> getAllByPage( Integer pageNum,  Integer pageSize);
+
+    int addPermission(SysPermission permission);
+
+    int updatePermission(SysPermission permission);
+
+    int deletePermission(Integer id);
 }

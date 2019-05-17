@@ -6,11 +6,13 @@ import com.zc.schoolinfo.shiro.UserRealm;
 import org.apache.shiro.authz.AuthorizationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.SQLIntegrityConstraintViolationException;
 
 /**
  * @Description TODO
@@ -29,11 +31,15 @@ public class GlobalHandleException {
         return WebApiResult.build(WebApiResultCodeEnum.NOT_HAVE_PERMISSION);
     }
 
-    @ExceptionHandler(value = Exception.class)
+
+
+    @ExceptionHandler(value = SQLIntegrityConstraintViolationException.class)
     @ResponseBody
-    public WebApiResult ErrorHandler(HttpServletRequest request, Exception e) {
-        LOGGER.info("来自"+request.getRequestURI()+"的未知错误请求");
+    public WebApiResult sqlHandler(HttpServletRequest request, SQLIntegrityConstraintViolationException e) {
+        LOGGER.info("来自"+request.getRequestURI()+"的请求");
         System.err.println(e.getMessage());
-        return WebApiResult.build(WebApiResultCodeEnum.UNKNOWN_ERROR);
+        return WebApiResult.build(WebApiResultCodeEnum.OPERATION_NOT_ALLOWED);
     }
+
+
 }

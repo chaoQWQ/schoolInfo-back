@@ -17,4 +17,10 @@ public class MD5Util {
         Object obj = new SimpleHash(hashAlgorithmName, credentials, credentialsSalt, hashIterations);
         return obj.toString();
     }
+    public static String MD5Encode(String credentials) {
+        String hashAlgorithmName = "MD5";
+        Object obj = new SimpleHash(hashAlgorithmName, credentials);
+        return obj.toString();
+    }
+
 }

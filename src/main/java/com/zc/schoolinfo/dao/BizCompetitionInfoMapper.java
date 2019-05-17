@@ -39,4 +39,8 @@ public interface BizCompetitionInfoMapper {
     void raiseViewNumbers(Integer id);
 
     List<Map<String,Object>> getTypeList();
+
+    Page<BizCompetitionInfo> getPendingAudit(@Param("pageNum")Integer pageNum, @Param("pageSize")Integer pageSize);
+
+    Page<BizCompetitionInfo> getMy(@Param("pageNum")Integer pageNum, @Param("pageSize")Integer pageSize,@Param("author")String author);
 }

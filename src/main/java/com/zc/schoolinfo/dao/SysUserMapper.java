@@ -1,5 +1,7 @@
 package com.zc.schoolinfo.dao;
 
+import com.github.pagehelper.Page;
+import com.zc.schoolinfo.model.dto.UserQuery;
 import com.zc.schoolinfo.model.pojo.SysUser;
 import com.zc.schoolinfo.model.pojo.SysUserExample;
 import java.util.List;
@@ -30,5 +32,11 @@ public interface SysUserMapper {
 
     SysUser findByUserName(@Param("username") String username);
 
+    SysUser findByEmail(@Param("email") String email);
+
     String getAvatar();
+
+    int insertRU(@Param("userId") Integer userId, @Param("roleName") String roleName);
+
+    Page<SysUser> findByPage(UserQuery userQuery);
 }

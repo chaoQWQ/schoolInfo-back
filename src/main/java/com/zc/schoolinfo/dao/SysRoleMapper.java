@@ -1,5 +1,6 @@
 package com.zc.schoolinfo.dao;
 
+import com.github.pagehelper.Page;
 import com.zc.schoolinfo.model.pojo.SysRole;
 import com.zc.schoolinfo.model.pojo.sysRoleExample;
 import java.util.List;
@@ -10,7 +11,7 @@ public interface SysRoleMapper {
 
     int deleteByExample(sysRoleExample example);
 
-    int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(SysRole record);
 
@@ -18,7 +19,7 @@ public interface SysRoleMapper {
 
     List<SysRole> selectByExample(sysRoleExample example);
 
-    SysRole selectByPrimaryKey(Long id);
+    SysRole selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") SysRole record, @Param("example") sysRoleExample example);
 
@@ -27,6 +28,14 @@ public interface SysRoleMapper {
     int updateByPrimaryKeySelective(SysRole record);
 
     int updateByPrimaryKey(SysRole record);
+
+    List<SysRole> getAll();
+
+    Page<SysRole> findByPage(@Param("pageNum")Integer pageNum, @Param("pageSize")Integer pageSize);
+
+    void insertRP(@Param("rid")Integer rid, @Param("pid")Integer pid);
+
+    void deleteRpById(@Param("roleId")Integer roleId);
 
 //    List<SysRole> findRoleByUsername(@Param("username") username);
 }

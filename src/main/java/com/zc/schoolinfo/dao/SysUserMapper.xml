@@ -5,7 +5,7 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="username" property="username" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
-    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+    <result column="realname" property="realname" jdbcType="VARCHAR" />
     <result column="mobile" property="mobile" jdbcType="VARCHAR" />
     <result column="email" property="email" jdbcType="VARCHAR" />
     <result column="qq" property="qq" jdbcType="VARCHAR" />
@@ -78,7 +78,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, username, password, nickname, mobile, email, qq, birthday, gender, avatar, user_type, 
+    id, username, password, realname, mobile, email, qq, birthday, gender, avatar, user_type,
     privacy, status, salt, create_time, update_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zc.schoolinfo.model.pojo.SysUserExample" >
@@ -113,19 +113,19 @@
   </delete>
   <insert id="insert" parameterType="com.zc.schoolinfo.model.pojo.SysUser" >
     insert into sys_user (id, username, password, 
-      nickname, mobile, email, 
+      realname, mobile, email,
       qq, birthday, gender, 
       avatar, user_type, privacy, 
       status, salt, create_time, 
       update_time)
     values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{nickname,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{realname,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
       #{qq,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, #{gender,jdbcType=TINYINT}, 
       #{avatar,jdbcType=VARCHAR}, #{userType,jdbcType=CHAR}, #{privacy,jdbcType=TINYINT}, 
       #{status,jdbcType=INTEGER}, #{salt,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.zc.schoolinfo.model.pojo.SysUser" >
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.zc.schoolinfo.model.pojo.SysUser" >
     insert into sys_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -137,8 +137,8 @@
       <if test="password != null" >
         password,
       </if>
-      <if test="nickname != null" >
-        nickname,
+      <if test="realname != null" >
+        realname,
       </if>
       <if test="mobile != null" >
         mobile,
@@ -187,8 +187,8 @@
       <if test="password != null" >
         #{password,jdbcType=VARCHAR},
       </if>
-      <if test="nickname != null" >
-        #{nickname,jdbcType=VARCHAR},
+      <if test="realname != null" >
+        #{realname,jdbcType=VARCHAR},
       </if>
       <if test="mobile != null" >
         #{mobile,jdbcType=VARCHAR},
@@ -246,8 +246,8 @@
       <if test="record.password != null" >
         password = #{record.password,jdbcType=VARCHAR},
       </if>
-      <if test="record.nickname != null" >
-        nickname = #{record.nickname,jdbcType=VARCHAR},
+      <if test="record.realname != null" >
+        realname = #{record.realname,jdbcType=VARCHAR},
       </if>
       <if test="record.mobile != null" >
         mobile = #{record.mobile,jdbcType=VARCHAR},
@@ -295,7 +295,7 @@
     set id = #{record.id,jdbcType=INTEGER},
       username = #{record.username,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
-      nickname = #{record.nickname,jdbcType=VARCHAR},
+      realname = #{record.realname,jdbcType=VARCHAR},
       mobile = #{record.mobile,jdbcType=VARCHAR},
       email = #{record.email,jdbcType=VARCHAR},
       qq = #{record.qq,jdbcType=VARCHAR},
@@ -321,8 +321,8 @@
       <if test="password != null" >
         password = #{password,jdbcType=VARCHAR},
       </if>
-      <if test="nickname != null" >
-        nickname = #{nickname,jdbcType=VARCHAR},
+      <if test="realname != null" >
+        realname = #{realname,jdbcType=VARCHAR},
       </if>
       <if test="mobile != null" >
         mobile = #{mobile,jdbcType=VARCHAR},
@@ -367,7 +367,7 @@
     update sys_user
     set username = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
-      nickname = #{nickname,jdbcType=VARCHAR},
+      realname = #{realname,jdbcType=VARCHAR},
       mobile = #{mobile,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
       qq = #{qq,jdbcType=VARCHAR},
@@ -386,10 +386,12 @@
   <select id="findByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
     select * from sys_user where username=#{username}
   </select>
-
+  <select id="findByEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from sys_user where email=#{email};
+  </select>
   <select id="getAvatar" resultType="java.lang.String">
 SELECT
-	*
+	img_url
 FROM
 	`sys_img` AS t1
 JOIN (
@@ -407,5 +409,19 @@ ORDER BY
 LIMIT 1;
 
 
+  </select>
+
+  <insert id="insertRU" >
+    replace into sys_user_role (user_id,role_id) values (#{userId},(select id from sys_role where name=#{roleName}))
+  </insert>
+
+  <select id="findByPage" parameterType="com.zc.schoolinfo.model.dto.UserQuery" resultMap="BaseResultMap">
+    select * from sys_user where 1=1
+    <if test="userName != null and userName !='' " >
+     and username like CONCAT('%',#{userName},'%')
+    </if>
+    <if test="userType != null and userType !='' and userType !='bx' " >
+      and user_type =#{userType}
+    </if>
   </select>
 </mapper>

@@ -41,6 +41,16 @@ public class BizCompetitionInfo {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
 
+    private String contactName;
+
+    private String contactTelNumber;
+
+    private String webUrl;
+
+    private String organizer;
+
+    private String attachUrl;
+
     public Integer getId() {
         return id;
     }
@@ -118,7 +128,7 @@ public class BizCompetitionInfo {
     }
 
     public void setStatus(String status) {
-        this.status = status;
+        this.status = status == null ? null : status.trim();
     }
 
     public Boolean getOriginal() {
@@ -175,5 +185,45 @@ public class BizCompetitionInfo {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getContactName() {
+        return contactName;
+    }
+
+    public void setContactName(String contactName) {
+        this.contactName = contactName == null ? null : contactName.trim();
+    }
+
+    public String getContactTelNumber() {
+        return contactTelNumber;
+    }
+
+    public void setContactTelNumber(String contactTelNumber) {
+        this.contactTelNumber = contactTelNumber == null ? null : contactTelNumber.trim();
+    }
+
+    public String getWebUrl() {
+        return webUrl;
+    }
+
+    public void setWebUrl(String webUrl) {
+        this.webUrl = webUrl == null ? null : webUrl.trim();
+    }
+
+    public String getOrganizer() {
+        return organizer;
+    }
+
+    public void setOrganizer(String organizer) {
+        this.organizer = organizer == null ? null : organizer.trim();
+    }
+
+    public String getAttachUrl() {
+        return attachUrl;
+    }
+
+    public void setAttachUrl(String attachUrl) {
+        this.attachUrl = attachUrl == null ? null : attachUrl.trim();
     }
 }

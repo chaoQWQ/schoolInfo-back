@@ -19,6 +19,11 @@
     <result column="view_numbers" property="viewNumbers" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="contact_name" property="contactName" jdbcType="VARCHAR" />
+    <result column="contact_tel_number" property="contactTelNumber" jdbcType="VARCHAR" />
+    <result column="web_url" property="webUrl" jdbcType="VARCHAR" />
+    <result column="organizer" property="organizer" jdbcType="VARCHAR" />
+    <result column="attach_url" property="attachUrl" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -79,8 +84,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, title, author, cover_image, summary, content, top, scope, type, status, original, 
-    keywords, comment, comment_numbers, view_numbers, create_time, update_time
+    id, title, author, cover_image, summary, content, top, scope, type, status, original,
+    keywords, comment, comment_numbers, view_numbers, create_time, update_time, contact_name,
+    contact_tel_number, web_url, organizer, attach_url
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zc.schoolinfo.model.pojo.BizCompetitionInfoExample" >
     select
@@ -97,7 +103,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from biz_competition_info
     where id = #{id,jdbcType=INTEGER}
@@ -113,18 +119,22 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.zc.schoolinfo.model.pojo.BizCompetitionInfo" >
-    insert into biz_competition_info (id, title, author, 
-      cover_image, summary, content, 
-      top, scope, type, status, 
-      original, keywords, comment, 
-      comment_numbers, view_numbers, create_time, 
-      update_time)
-    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, 
+    insert into biz_competition_info (id, title, author,
+      cover_image, summary, content,
+      top, scope, type, status,
+      original, keywords, comment,
+      comment_numbers, view_numbers, create_time,
+      update_time, contact_name, contact_tel_number,
+      web_url, organizer, attach_url
+      )
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR},
       #{coverImage,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR},
       #{top,jdbcType=BIT}, #{scope,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
-      #{original,jdbcType=BIT}, #{keywords,jdbcType=VARCHAR}, #{comment,jdbcType=BIT}, 
-      #{commentNumbers,jdbcType=INTEGER}, #{viewNumbers,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+      #{original,jdbcType=BIT}, #{keywords,jdbcType=VARCHAR}, #{comment,jdbcType=BIT},
+      #{commentNumbers,jdbcType=INTEGER}, #{viewNumbers,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP}, #{contactName,jdbcType=VARCHAR}, #{contactTelNumber,jdbcType=VARCHAR},
+      #{webUrl,jdbcType=VARCHAR}, #{organizer,jdbcType=VARCHAR}, #{attachUrl,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.zc.schoolinfo.model.pojo.BizCompetitionInfo" >
     insert into biz_competition_info
@@ -180,6 +190,21 @@
       <if test="updateTime != null" >
         update_time,
       </if>
+      <if test="contactName != null" >
+        contact_name,
+      </if>
+      <if test="contactTelNumber != null" >
+        contact_tel_number,
+      </if>
+      <if test="webUrl != null" >
+        web_url,
+      </if>
+      <if test="organizer != null" >
+        organizer,
+      </if>
+      <if test="attachUrl != null" >
+        attach_url,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -232,6 +257,21 @@
       </if>
       <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contactName != null" >
+        #{contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactTelNumber != null" >
+        #{contactTelNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="webUrl != null" >
+        #{webUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="organizer != null" >
+        #{organizer,jdbcType=VARCHAR},
+      </if>
+      <if test="attachUrl != null" >
+        #{attachUrl,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -295,6 +335,21 @@
       <if test="record.updateTime != null" >
         update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.contactName != null" >
+        contact_name = #{record.contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactTelNumber != null" >
+        contact_tel_number = #{record.contactTelNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.webUrl != null" >
+        web_url = #{record.webUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.organizer != null" >
+        organizer = #{record.organizer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attachUrl != null" >
+        attach_url = #{record.attachUrl,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -303,22 +358,27 @@
   <update id="updateByExample" parameterType="map" >
     update biz_competition_info
     set id = #{record.id,jdbcType=INTEGER},
-      title = #{record.title,jdbcType=VARCHAR},
-      author = #{record.author,jdbcType=VARCHAR},
-      cover_image = #{record.coverImage,jdbcType=VARCHAR},
-      summary = #{record.summary,jdbcType=VARCHAR},
-      content = #{record.content,jdbcType=VARCHAR},
-      top = #{record.top,jdbcType=BIT},
-      scope = #{record.scope,jdbcType=VARCHAR},
-      type = #{record.type,jdbcType=VARCHAR},
-      status = #{record.status,jdbcType=VARCHAR},
-      original = #{record.original,jdbcType=BIT},
-      keywords = #{record.keywords,jdbcType=VARCHAR},
-      comment = #{record.comment,jdbcType=BIT},
-      comment_numbers = #{record.commentNumbers,jdbcType=INTEGER},
-      view_numbers = #{record.viewNumbers,jdbcType=INTEGER},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    title = #{record.title,jdbcType=VARCHAR},
+    author = #{record.author,jdbcType=VARCHAR},
+    cover_image = #{record.coverImage,jdbcType=VARCHAR},
+    summary = #{record.summary,jdbcType=VARCHAR},
+    content = #{record.content,jdbcType=VARCHAR},
+    top = #{record.top,jdbcType=BIT},
+    scope = #{record.scope,jdbcType=VARCHAR},
+    type = #{record.type,jdbcType=VARCHAR},
+    status = #{record.status,jdbcType=VARCHAR},
+    original = #{record.original,jdbcType=BIT},
+    keywords = #{record.keywords,jdbcType=VARCHAR},
+    comment = #{record.comment,jdbcType=BIT},
+    comment_numbers = #{record.commentNumbers,jdbcType=INTEGER},
+    view_numbers = #{record.viewNumbers,jdbcType=INTEGER},
+    create_time = #{record.createTime,jdbcType=TIMESTAMP},
+    update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+    contact_name = #{record.contactName,jdbcType=VARCHAR},
+    contact_tel_number = #{record.contactTelNumber,jdbcType=VARCHAR},
+    web_url = #{record.webUrl,jdbcType=VARCHAR},
+    organizer = #{record.organizer,jdbcType=VARCHAR},
+    attach_url = #{record.attachUrl,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -374,6 +434,21 @@
       <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="contactName != null" >
+        contact_name = #{contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactTelNumber != null" >
+        contact_tel_number = #{contactTelNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="webUrl != null" >
+        web_url = #{webUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="organizer != null" >
+        organizer = #{organizer,jdbcType=VARCHAR},
+      </if>
+      <if test="attachUrl != null" >
+        attach_url = #{attachUrl,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -394,12 +469,17 @@
       comment_numbers = #{commentNumbers,jdbcType=INTEGER},
       view_numbers = #{viewNumbers,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      contact_name = #{contactName,jdbcType=VARCHAR},
+      contact_tel_number = #{contactTelNumber,jdbcType=VARCHAR},
+      web_url = #{webUrl,jdbcType=VARCHAR},
+      organizer = #{organizer,jdbcType=VARCHAR},
+      attach_url = #{attachUrl,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
   <select id="getCompetitionByPage" parameterType="com.zc.schoolinfo.model.dto.CompetitionQueryDTO" resultMap="BaseResultMap">
-    select * from biz_competition_info where 1=1
+    select * from biz_competition_info where status="PASS"
     <if test="scope != null and scope != '' and scope !='不限' " >
       and scope=#{scope}
     </if>
@@ -411,10 +491,10 @@
     </if>
     <if test="sort != null and sort != '' " >
       <if test="sort ==1">
-        order by create_time
+        order by create_time desc
       </if>
       <if test="sort ==2">
-        order by view_numbers
+        order by view_numbers desc
       </if>
     </if>
   </select>
@@ -427,7 +507,7 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" typeHandler="com.zc.schoolinfo.common.utils.EmptyStringIfNull" />
   </resultMap>
   <select id="getHotTitle" parameterType="java.lang.String" resultMap="hotTitleMap">
-        select id,title,cover_image,summary,create_time from biz_competition_info where scope=#{type} order by view_numbers limit 10
+        select id,title,cover_image,summary,create_time from biz_competition_info where scope=#{type} and status="PASS" order by view_numbers limit 10
   </select>
 
   <update id="raiseViewNumbers" parameterType="java.lang.Integer">
@@ -436,5 +516,13 @@
 
   <select id="getTypeList" resultType="java.util.Map">
     select id,name from biz_competition_tags;
+  </select>
+  
+  <select id="getPendingAudit" resultMap="BaseResultMap">
+    select * from biz_competition_info where status="PENDING_REVIEW" order by update_time
+  </select>
+
+  <select id="getMy" resultMap="BaseResultMap">
+    select * from biz_competition_info where author=#{author} order by update_time
   </select>
 </mapper>
