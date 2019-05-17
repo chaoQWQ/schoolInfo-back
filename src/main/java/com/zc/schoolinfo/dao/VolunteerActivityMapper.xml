@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zc.schoolinfo.dao.VolunteerActivityMapper" >
+  <resultMap id="BaseResultMap" type="com.zc.schoolinfo.model.pojo.VolunteerActivity" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="service_type" property="serviceType" jdbcType="VARCHAR" />
+    <result column="recruit_start_time" property="recruitStartTime" jdbcType="TIMESTAMP" />
+    <result column="recruit_end_time" property="recruitEndTime" jdbcType="TIMESTAMP" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="join_numbers" property="joinNumbers" jdbcType="INTEGER" />
+    <result column="recruit_numbers" property="recruitNumbers" jdbcType="INTEGER" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="cover_image" property="coverImage" jdbcType="VARCHAR" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, title, address, service_type, recruit_start_time, recruit_end_time, start_time,
+    end_time, join_numbers, recruit_numbers, description, create_time, update_time, cover_image,author
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zc.schoolinfo.model.pojo.VolunteerActivityExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from biz_volunteer_activity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from biz_volunteer_activity
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from biz_volunteer_activity
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zc.schoolinfo.model.pojo.VolunteerActivityExample" >
+    delete from biz_volunteer_activity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zc.schoolinfo.model.pojo.VolunteerActivity" >
+    insert into biz_volunteer_activity (id, title, address,
+      service_type, recruit_start_time, recruit_end_time, 
+      start_time, end_time, join_numbers, 
+      recruit_numbers, description, create_time, 
+      update_time, cover_image)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
+      #{serviceType,jdbcType=VARCHAR}, #{recruitStartTime,jdbcType=TIMESTAMP}, #{recruitEndTime,jdbcType=TIMESTAMP}, 
+      #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{joinNumbers,jdbcType=INTEGER}, 
+      #{recruitNumbers,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{coverImage,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zc.schoolinfo.model.pojo.VolunteerActivity" >
+    insert into biz_volunteer_activity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="serviceType != null" >
+        service_type,
+      </if>
+      <if test="recruitStartTime != null" >
+        recruit_start_time,
+      </if>
+      <if test="recruitEndTime != null" >
+        recruit_end_time,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="joinNumbers != null" >
+        join_numbers,
+      </if>
+      <if test="recruitNumbers != null" >
+        recruit_numbers,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="coverImage != null" >
+        cover_image,
+      </if>
+      <if test="author != null" >
+        author,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceType != null" >
+        #{serviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitStartTime != null" >
+        #{recruitStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recruitEndTime != null" >
+        #{recruitEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="joinNumbers != null" >
+        #{joinNumbers,jdbcType=INTEGER},
+      </if>
+      <if test="recruitNumbers != null" >
+        #{recruitNumbers,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="coverImage != null" >
+        #{coverImage,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zc.schoolinfo.model.pojo.VolunteerActivityExample" resultType="java.lang.Integer" >
+    select count(*) from biz_volunteer_activity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update biz_volunteer_activity
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceType != null" >
+        service_type = #{record.serviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recruitStartTime != null" >
+        recruit_start_time = #{record.recruitStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.recruitEndTime != null" >
+        recruit_end_time = #{record.recruitEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.startTime != null" >
+        start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null" >
+        end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.joinNumbers != null" >
+        join_numbers = #{record.joinNumbers,jdbcType=INTEGER},
+      </if>
+      <if test="record.recruitNumbers != null" >
+        recruit_numbers = #{record.recruitNumbers,jdbcType=INTEGER},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.coverImage != null" >
+        cover_image = #{record.coverImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.author != null" >
+        author = #{record.author,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update biz_volunteer_activity
+    set id = #{record.id,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      service_type = #{record.serviceType,jdbcType=VARCHAR},
+      recruit_start_time = #{record.recruitStartTime,jdbcType=TIMESTAMP},
+      recruit_end_time = #{record.recruitEndTime,jdbcType=TIMESTAMP},
+      start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      join_numbers = #{record.joinNumbers,jdbcType=INTEGER},
+      recruit_numbers = #{record.recruitNumbers,jdbcType=INTEGER},
+      description = #{record.description,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      cover_image = #{record.coverImage,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zc.schoolinfo.model.pojo.VolunteerActivity" >
+    update biz_volunteer_activity
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceType != null" >
+        service_type = #{serviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitStartTime != null" >
+        recruit_start_time = #{recruitStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recruitEndTime != null" >
+        recruit_end_time = #{recruitEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="joinNumbers != null" >
+        join_numbers = #{joinNumbers,jdbcType=INTEGER},
+      </if>
+      <if test="recruitNumbers != null" >
+        recruit_numbers = #{recruitNumbers,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="coverImage != null" >
+        cover_image = #{coverImage,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zc.schoolinfo.model.pojo.VolunteerActivity" >
+    update biz_volunteer_activity
+    set title = #{title,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      service_type = #{serviceType,jdbcType=VARCHAR},
+      recruit_start_time = #{recruitStartTime,jdbcType=TIMESTAMP},
+      recruit_end_time = #{recruitEndTime,jdbcType=TIMESTAMP},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      join_numbers = #{joinNumbers,jdbcType=INTEGER},
+      recruit_numbers = #{recruitNumbers,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      cover_image = #{coverImage,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.zc.schoolinfo.model.dto.VolunteerQueryDTO">
+    SELECT
+    *
+    FROM
+    (
+    SELECT
+    *, (
+    CASE
+    WHEN recruit_start_time &gt; CURRENT_TIME () THEN
+    '招募待启动'
+    WHEN CURRENT_TIME () BETWEEN recruit_start_time
+    AND recruit_end_time THEN
+    '招募中'
+    WHEN CURRENT_TIME () &gt; recruit_end_time
+    AND CURRENT_TIME () &lt;= end_time THEN
+    '招募已结束'
+    WHEN CURRENT_TIME () &gt; end_time THEN
+    '已结项'
+    END
+    ) AS state
+    FROM
+    biz_volunteer_activity
+    ) AS v where 1=1
+    <if test="type != null and type.size > 0 " >
+      and v.service_type in
+      <foreach item="item" collection="type" separator="," open="(" close=")" index="">
+        #{item}
+      </foreach>
+    </if>
+    <if test="state !=null and state !='' and state !='不限' ">
+      v.state=#{state}
+    </if>
+    <if test="numbers !=null and numbers !='' and numbers !='不限'">
+      <choose>
+        <when test="numbers == '1-10'">
+          and v.recruit_numbers between 1 and 10
+        </when>
+        <when test="numbers == '11-100'">
+          and v.recruit_numbers between 11 and 100
+        </when>
+        <when test="numbers == '101-200'">
+          and v.recruit_numbers between 101 and 200
+        </when>
+        <when test="numbers == '200以上'">
+          and v.recruit_numbers &gt;200
+        </when>
+      </choose>
+    </if>
+    <if test="sort != null and sort != '' " >
+      <if test="sort ==1">
+        order by v.create_time desc
+      </if>
+      <if test="sort ==2">
+        order by v.join_numbers desc
+      </if>
+    </if>
+  </select>
+
+  <select id="getDetail" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    SELECT
+    *
+    FROM
+    (
+    SELECT
+    *, (
+    CASE
+    WHEN recruit_start_time &gt; CURRENT_TIME () THEN
+    '招募待启动'
+    WHEN CURRENT_TIME () BETWEEN recruit_start_time
+    AND recruit_end_time THEN
+    '招募中'
+    WHEN CURRENT_TIME () &gt; recruit_end_time
+    AND CURRENT_TIME () &lt;= end_time THEN
+    '招募已结束'
+    WHEN CURRENT_TIME () &gt; end_time THEN
+    '已结项'
+    END
+    ) AS state
+    FROM
+    biz_volunteer_activity
+    ) AS v where v.id=#{id}
+  </select>
+
+  <resultMap id="JoinInfoMap" type="java.util.Map" >
+    <result column="realname" property="name" jdbcType="VARCHAR" />
+    <result column="create_time" property="date" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <select id="getJoinInfo" parameterType="java.lang.Integer" resultMap="JoinInfoMap">
+    SELECT u.realname,v.create_time from biz_volunteer_user v  LEFT JOIN sys_user u on u.id = v.user_id WHERE v.volunteer_id=#{id}
+  </select>
+
+  <update id="raiseJoinNumbers">
+    update biz_volunteer_activity set join_numbers=join_numbers+1 where id=#{id}
+  </update>
+  <insert id="insertJoin">
+    insert into biz_volunteer_user (volunteer_id,user_id) values (#{id},#{userId})
+  </insert>
+  <select id="getHotTitle" resultMap="BaseResultMap">
+    select * from biz_volunteer_activity order by create_time desc limit 10
+  </select>
+  <select id="getMy" resultMap="BaseResultMap">
+    select * from biz_volunteer_activity where author=#{author} order by create_time desc
+  </select>
+</mapper>
